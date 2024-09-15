@@ -1,5 +1,7 @@
 # regex
 
+A simple regex engine.
+
 ## Example
 
 ```rust
