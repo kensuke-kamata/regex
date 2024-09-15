@@ -45,8 +45,19 @@ impl Generator {
         match ast {
             AST::Char(c) => self.gen_char(*c)?,
             AST::Plus(e) => self.gen_plus(e)?,
-            // TODO: Handle stack overflow
-            AST::Star(e) => self.gen_star(e)?,
+            AST::Star(e1) => {
+                match &**e1 {
+                    AST::Star(_) => self.gen_expr(e1)?,
+                    AST::Seq(e2) if e2.len() == 1 => {
+                        if let Some(e3 @ AST::Star(_)) = e2.first() {
+                            self.gen_expr(e3)?;
+                        } else {
+                            self.gen_star(e1)?;
+                        }
+                    }
+                    e => self.gen_star(e)?,
+                }
+            }
             AST::Question(e) => self.gen_question(e)?,
             AST::Or(e1, e2) => self.gen_or(e1, e2)?,
             AST::Seq(v) => self.gen_seq(v)?,

@@ -54,7 +54,7 @@ pub fn print(expr: &str) -> Result<(), DynError> {
 /// # Example
 /// ```
 /// use regex;
-/// regex::check("abc|(de|cd)+", "decddede", true);
+/// regex::is_match("abc|(de|cd)+", "decddede", true);
 /// ```
 ///
 /// # Returns

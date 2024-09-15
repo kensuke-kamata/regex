@@ -26,7 +26,7 @@ fn match_file(expr: &str, file: &str) -> Result<(), DynError> {
     let f = File::open(file)?;
     let reader = BufReader::new(f);
 
-    engine::print(expr)?;
+    print(expr)?;
     println!();
 
     for line in reader.lines() {
@@ -77,11 +77,11 @@ mod tests {
         assert!(is_match("(abc)*", "abcabc", true).unwrap());
         assert!(is_match("(ab|cd)+", "abcdcd", true).unwrap());
         assert!(is_match("abc?", "ab", true).unwrap());
-        // assert!(is_match("((((a*)*)*)*)", "aaaaaaaaa", true).unwrap());
-        // assert!(is_match("(a*)*b", "aaaaaaaaab", true).unwrap());
-        // assert!(is_match("(a*)*b", "b", true).unwrap());
-        // assert!(is_match("a**b", "aaaaaaaaab", true).unwrap());
-        // assert!(is_match("a**b", "b", true).unwrap());
+        assert!(is_match("((((a*)*)*)*)", "aaaaaaaaa", true).unwrap());
+        assert!(is_match("(a*)*b", "aaaaaaaaab", true).unwrap());
+        assert!(is_match("(a*)*b", "b", true).unwrap());
+        assert!(is_match("a**b", "aaaaaaaaab", true).unwrap());
+        assert!(is_match("a**b", "b", true).unwrap());
 
         // パース成功、マッチ失敗
         assert!(!is_match("abc|def", "efa", true).unwrap());
